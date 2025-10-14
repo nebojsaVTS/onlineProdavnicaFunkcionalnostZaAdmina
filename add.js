@@ -39,9 +39,21 @@ function createArticleRows() {
         tr.appendChild(tdNaziv);
         tr.appendChild(tdCena);
 
+        tr.addEventListener("click", function(){
+            prikaziDetalje(artikal)
+        })
         
         tabelaBody.appendChild(tr);
     }
+}
+
+function prikaziDetalje(artikal) {
+    const detailsDiv = document.querySelector("#details-div");
+    detailsDiv.innerHTML = `
+        <p><strong>Naziv:</strong> ${artikal.naziv}</p>
+        <p><strong>Cena:</strong> ${artikal.cena.toFixed(2)} $</p>
+        <p><strong>Opis:</strong> ${artikal.opis}</p>
+    `;
 }
 
 document.addEventListener("DOMContentLoaded", createArticleRows);
