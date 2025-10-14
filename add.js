@@ -56,4 +56,31 @@ function prikaziDetalje(artikal) {
     `;
 }
 
-document.addEventListener("DOMContentLoaded", createArticleRows);
+function dodajArtikal(){
+    const nazivInput = document.querySelector("#naziv");
+    const cenaInput = document.querySelector("#cena");
+    const opisInput = document.querySelector("#opis");
+
+    const naziv = nazivInput.value.trim();
+    const cena = parseFloat(cenaInput.value);
+    const opis = opisInput.value.trim();
+
+    if(!naziv || isNaN(cena) || !opis){
+        alert("Molimo popunite sva polja ispravno")
+        return;
+    }
+
+    const noviArtikal = new Artikal(naziv, cena, opis);
+    artikli.push(noviArtikal);
+    createArticleRows();
+
+    nazivInput.value = "";
+    cenaInput.value = "";
+    opisInput.value = "";
+}
+
+document.addEventListener("DOMContentLoaded", function(){
+    createArticleRows();
+    const dugme = document.querySelector("#dodajBtn");
+    dugme.addEventListener("click", dodajArtikal)
+})
