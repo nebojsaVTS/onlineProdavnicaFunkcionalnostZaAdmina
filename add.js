@@ -6,13 +6,22 @@ class Artikal {
     }
 }
 
+let artikli = [];
 
-const artikal1 = new Artikal("Laptop", 1200.99, "Praktičan i moćan laptop za svakodnevni rad.");
-const artikal2 = new Artikal("Telefon", 799.49, "Moderan pametni telefon sa dugotrajnom baterijom.");
-const artikal3 = new Artikal("Monitor", 249.99, "Full HD monitor od 24 inča sa tankim okvirom.");
-
-
-const artikli = [artikal1, artikal2, artikal3];
+function ucitajArtikle(){
+    const sacuvano = localStorage.getItem("artikli");
+    if(sacuvano){
+        const niz = JSON.parse(sacuvano);
+        artikli = JSON.parse(sacuvano);
+    } else{
+        artikli = [
+            new Artikal("Laptop", 1200.99, "Praktičan i moćan laptop za svakodnevni rad."),
+            new Artikal("Telefon", 799.49, "Moderan pametni telefon sa dugotrajnom baterijom."),
+            new Artikal("Monitor", 249.99, "Full HD monitor od 24 inča sa tankim okvirom.")
+        ];
+        localStorage.setItem("artikli", JSON.stringify(artikli));
+    }
+}
 
 function createArticleRows() {
     const tabelaBody = document.querySelector("#tabela-body");
@@ -72,6 +81,9 @@ function dodajArtikal(){
 
     const noviArtikal = new Artikal(naziv, cena, opis);
     artikli.push(noviArtikal);
+
+    localStorage.setItem("artikli", JSON.stringify(artikli));
+
     createArticleRows();
 
     nazivInput.value = "";
@@ -80,7 +92,9 @@ function dodajArtikal(){
 }
 
 document.addEventListener("DOMContentLoaded", function(){
+    ucitajArtikle();
     createArticleRows();
+
     const dugme = document.querySelector("#dodajBtn");
     dugme.addEventListener("click", dodajArtikal)
-})
+});
